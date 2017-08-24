@@ -1,4 +1,4 @@
-require 'rest_client'
+require 'faraday'
 
 
 module MailgunRails
@@ -12,12 +12,7 @@ module MailgunRails
     end
 
     def send_message(options)
-      RestClient::Request.execute(
-              method: :post,
-              url: mailgun_url,
-              payload: options,
-              verify_ssl: verify_ssl
-      )
+      Faraday.post(mailgun_url, options)
     end
 
     def mailgun_url
