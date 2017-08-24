@@ -18,7 +18,6 @@ module MailgunRails
 
       connection.basic_auth('api', api_key)
 
-      byebug
       connection.post('messages', options)
     end
 
