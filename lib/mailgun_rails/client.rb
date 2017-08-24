@@ -12,7 +12,10 @@ module MailgunRails
     end
 
     def send_message(options)
-      Faraday.post(mailgun_url, options)
+      conn = Faraday.new do |conn|
+        conn.basic_auth('api', api_key)
+      end
+      conn.post(mailgun_url, options)
     end
 
     def mailgun_url
@@ -20,7 +23,7 @@ module MailgunRails
     end
 
     def api_url
-      "https://api:#{api_key}@api.mailgun.net/v3/#{domain}"
+      "https://api.mailgun.net/v3/#{domain}"
     end
   end
 end
