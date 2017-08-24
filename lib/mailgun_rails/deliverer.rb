@@ -22,8 +22,8 @@ module MailgunRails
 
     def deliver!(rails_message)
       response = mailgun_client.send_message build_mailgun_message_for(rails_message)
-      if response.code == 200
-        mailgun_message_id = JSON.parse(response.to_str)["id"]
+      if response.status == 200
+        mailgun_message_id = JSON.parse(response.body)["id"]
         rails_message.message_id = mailgun_message_id
       end
       response
